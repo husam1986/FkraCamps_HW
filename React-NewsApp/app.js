@@ -39,10 +39,11 @@ let NewsItem = styled.div`
   display: flex;
   padding: 10px;
 `
-
+//my
 let NewsText = styled.div`
   padding-left: 14px;
   position: relative;
+  flex-grow: 1;  
 `
 
 let DateTime = styled.time`
@@ -51,6 +52,17 @@ let DateTime = styled.time`
   color: #399DF2;
   font-family: sans-serif;
 `
+
+
+//<My 
+let Voter = styled.div `
+display: flex;
+flex-direction: column;
+justify-content: center;
+text-align: center;
+`
+//My>
+
 
 class News extends Component{
   
@@ -61,20 +73,40 @@ class News extends Component{
       news: [],
       searchValue: ''
     }
-
-    this.getNews()
+    //localStorage.clear()
+    //
+    
+    this.loadDB()
+    
 
   }
-
+//< My   تحميل الاخبار والفوتنك من الداتابيس
+  loadDB() {
+    if (JSON.parse(localStorage.getItem('db')) == null){
+      localStorage.setItem('db', JSON.stringify(this.state));
+      this.getNews() };
+      
+    this.state = JSON.parse(localStorage.getItem('db'))
+    console.log(this.state)
+  }
+  // My>
+  
   getNews(searchTerm = 'Iraq') {
     fetch(`https://newsapi.org/v2/everything?q=${searchTerm}&apiKey=978d6c3818ff431b8c210ae86550fb1f`)
     .then((response)=>{
       return response.json()
     })
     .then((data)=>{
+      // <My   اضافة عنصر للاوبجكت  يحمل قيمة الفوتنك
+      data.articles.forEach(element => {
+        element.Vote_value = 0;
+       })
+      // My >
+
       this.setState({
         news: data.articles
       })
+      localStorage.setItem('db', JSON.stringify(this.state)); /// My  حفظ الاخبار كلها بضمنها الفوتنك في اللوكل داتابيس
     })
   }
 
@@ -92,6 +124,19 @@ class News extends Component{
       })
     }
   }
+    //< My  ازرار الفوتنك  تخزن القيم في اوبجكت الاخبار ثم تعمل رندرنك لاضهار النتيجة
+  onMouse_VoterUp(event,i){
+    this.state.news[i].Vote_value +=1
+    localStorage.setItem('db', JSON.stringify(this.state));
+    ReactDOM.render(<App/>, document.getElementById('root'))
+  }
+
+  onMouse_VoterDown(event,i){
+    this.state.news[i].Vote_value -=1
+    localStorage.setItem('db', JSON.stringify(this.state));
+    ReactDOM.render(<App/>, document.getElementById('root'))
+  }
+// My >
 
   render() {
     return (
@@ -114,6 +159,11 @@ class News extends Component{
                   <p>{item.description}</p>
                   <DateTime>{item.publishedAt}</DateTime>
                 </NewsText>
+                <Voter>
+                  <img onMouseUp={this.onMouse_VoterUp.bind(this,this,i)} height="13px" src={require('./assets/upvote.svg')}></img>
+                  <div>{item.Vote_value}</div>
+                  <img onMouseUp={this.onMouse_VoterDown.bind(this,this,i)} height="13px" src={require('./assets/downvote.svg')} alt=""></img>
+                </Voter>
               </NewsItem>
               )
             })
