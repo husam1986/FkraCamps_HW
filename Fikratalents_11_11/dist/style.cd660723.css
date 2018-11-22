@@ -1,0 +1,95 @@
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+header {
+  height: 100px;
+  padding-left: 10%;
+  padding-right: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header .logo-container img {
+  height: 70px;
+}
+
+header .user-menu img {
+  height: 35px;
+}
+
+header .user-menu {
+  display: flex;
+}
+
+header .username {
+  margin: 0px 10px;
+}
+
+
+
+
+section {
+  background-color: #F2F4F7;
+  height: calc(100vh - 100px);
+}
+.options{
+  margin-left: 2.5%;
+  padding: 20px 100px 10px 100px;
+  display: flex;
+}
+.options button {
+  background-color: rgb(140, 59, 151);
+  border: none;
+  border-radius: 3px;
+  width: 180px;
+  margin: 10px;
+  margin-bottom: 0px;
+  color: #fff;
+  height: 35px;
+  font-size: 12px; 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.cards {
+  padding: 30px 10% 30px 10%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card {
+  flex-basis: 18%;
+  text-align: center;
+  background-color: #fff;
+  margin-bottom: 20px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  align-items: center;
+}
+
+.card button {
+  background-color: #5B99DD;
+  border: none;
+  border-radius: 3px;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 10px;
+  color: #fff;
+  height: 30px;
+  font-size: 20px;
+}
+
+.card img {
+  width: 50%;
+  padding: 5px;
+}
+.card .developer-name{
+  color: #5B99DD;
+}
