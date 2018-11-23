@@ -119,8 +119,9 @@ class News extends Component{
       // My >
 
       this.setState({
-        news: data.articles
+        news: data.articles.slice(0,parseInt(art_numb))
       })
+      console.log(this.state)
       localStorage.setItem('db', JSON.stringify(this.state)); /// My  حفظ الاخبار كلها بضمنها الفوتنك في اللوكل داتابيس
     })
   }
@@ -153,11 +154,17 @@ class News extends Component{
   }
 
   onSortListChang(){
- let d = document.getElementById("DropDownL_id").value;
+ let d = document.getElementById("DropDownSort").value;
   //console.log();
   this.getNews(this.state.searchValue,d)
   }
 
+  onLimitListChang(){
+    let d = document.getElementById("DropDownLimit").value;
+     console.log(d);
+     this.getNews(this.state.searchValue,'',d)
+     }
+   
 // My >
 
   render() {
@@ -166,13 +173,13 @@ class News extends Component{
         <Navigation>
           <img width="150px;" src={require('./assets/logo.svg')}/>
           <Enpty_div></Enpty_div>
-          <DropDownL id="DropDownL_id" onChange = {this.onSortListChang.bind(this)}>
+          <DropDownL id="DropDownSort" onChange = {this.onSortListChang.bind(this)}>
             <option value=''>default</option>
             <option value='title'>article title</option>
             <option value='publishedAt' >article date</option>
             <option value='Vote_value'>number of votes</option>
           </DropDownL>
-          <DropDownL>
+          <DropDownL id="DropDownLimit" onChange = {this.onLimitListChang.bind(this)}>
             <option value="5">5 article</option>
             <option value="10">10 article</option>
             <option value="15">15 article</option>
