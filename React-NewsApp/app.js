@@ -14,6 +14,7 @@ let SearchBox = styled.input `
   height: 40px;
   outline: none;
   padding: 0 10px;
+  margin: 5px;
 `
 let Navigation = styled.header `
   display: flex;
@@ -61,9 +62,23 @@ flex-direction: column;
 justify-content: center;
 text-align: center;
 `
+let DropDownL = styled.select `
+  border-radius: 20px;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.2rem;
+  border: 0px;
+  height: 40px;
+  outline: none;
+  padding: 0 10px;
+  margin: 5px;
+`
+let Enpty_div = styled.div `
+width: 200px;
+flex-grow: 1;  
+`
+
 //My>
-
-
 class News extends Component{
   
   constructor(){
@@ -91,8 +106,8 @@ class News extends Component{
   }
   // My>
   
-  getNews(searchTerm = 'Iraq') {
-    fetch(`https://newsapi.org/v2/everything?q=${searchTerm}&apiKey=978d6c3818ff431b8c210ae86550fb1f`)
+  getNews(searchTerm = 'Iraq',sorting = '', art_numb=15) {
+    fetch(`https://newsapi.org/v2/everything?q=${searchTerm}&sortBy=${sorting}&apiKey=978d6c3818ff431b8c210ae86550fb1f`)
     .then((response)=>{
       return response.json()
     })
@@ -119,9 +134,9 @@ class News extends Component{
   onKeyUp(event){
     if(event.key == 'Enter'){
       this.getNews(this.state.searchValue)
-      this.setState({
-        searchValue: ''
-      })
+     // this.setState({
+     //   searchValue: ''
+     // })
     }
   }
     //< My  ازرار الفوتنك  تخزن القيم في اوبجكت الاخبار ثم تعمل رندرنك لاضهار النتيجة
@@ -136,6 +151,13 @@ class News extends Component{
     localStorage.setItem('db', JSON.stringify(this.state));
     ReactDOM.render(<App/>, document.getElementById('root'))
   }
+
+  onSortListChang(){
+ let d = document.getElementById("DropDownL_id").value;
+  //console.log();
+  this.getNews(this.state.searchValue,d)
+  }
+
 // My >
 
   render() {
@@ -143,6 +165,18 @@ class News extends Component{
       <React.Fragment>
         <Navigation>
           <img width="150px;" src={require('./assets/logo.svg')}/>
+          <Enpty_div></Enpty_div>
+          <DropDownL id="DropDownL_id" onChange = {this.onSortListChang.bind(this)}>
+            <option value=''>default</option>
+            <option value='title'>article title</option>
+            <option value='publishedAt' >article date</option>
+            <option value='Vote_value'>number of votes</option>
+          </DropDownL>
+          <DropDownL>
+            <option value="5">5 article</option>
+            <option value="10">10 article</option>
+            <option value="15">15 article</option>
+          </DropDownL>
           <SearchBox 
           onChange={this.onInputChange.bind(this)} 
           onKeyUp={this.onKeyUp.bind(this)}
