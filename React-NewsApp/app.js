@@ -16,13 +16,26 @@ let SearchBox = styled.input `
   padding: 0 10px;
   margin: 5px;
 `
+let EmailBox = styled.input `
+  border-radius: 20px;
+  background-color: #fff;
+  color: #111111;
+  font-size: 1.2rem;
+  border: 2px solid #000;
+  height: 40px;
+  outline: none;
+  padding: 0 10px;
+  margin: 5px;
+  width : 430px;
+`
+
 let Navigation = styled.header `
   display: flex;
   padding: 0px 10%;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0px 2px 25px rgba(0,0,0,0.16);
-  height: 100px;
+  height: 130px;
 `
 
 let NewsContainer = styled.main`
@@ -73,9 +86,21 @@ let DropDownL = styled.select `
   padding: 0 10px;
   margin: 5px;
 `
-let Enpty_div = styled.div `
-width: 200px;
-flex-grow: 1;  
+let Header_Box_div = styled.div `
+width: 600px;
+`
+
+let Subscribtion = styled.button `
+  border-radius: 20px;
+  background-color: #000;
+  color: #fff;
+  font-size: 1.2rem;
+  border: 0px;
+  height: 40px;
+  outline: none;
+  padding: 0 10px;
+  margin: 5px;
+ 
 `
 
 //My>
@@ -86,7 +111,7 @@ class News extends Component{
   
     this.state = {
       news: [],
-      searchValue: ''
+      searchValue: '',
     }
     //localStorage.clear()
     //
@@ -165,6 +190,11 @@ class News extends Component{
      this.getNews(this.state.searchValue,'',d)
      }
    
+  onSubscribtionClick(){
+    localStorage.setItem('Emails', JSON.stringify(document.getElementById("EmailBox").value));
+    alert('your email are saved in localstorage : ' + document.getElementById("EmailBox").value)
+    document.getElementById("EmailBox").value="";
+  }
 // My >
 
   render() {
@@ -172,22 +202,25 @@ class News extends Component{
       <React.Fragment>
         <Navigation>
           <img width="150px;" src={require('./assets/logo.svg')}/>
-          <Enpty_div></Enpty_div>
-          <DropDownL id="DropDownSort" onChange = {this.onSortListChang.bind(this)}>
-            <option value=''>default</option>
-            <option value='title'>article title</option>
-            <option value='publishedAt' >article date</option>
-            <option value='Vote_value'>number of votes</option>
-          </DropDownL>
-          <DropDownL id="DropDownLimit" onChange = {this.onLimitListChang.bind(this)}>
-            <option value="5">5 article</option>
-            <option value="10">10 article</option>
-            <option value="15">15 article</option>
-          </DropDownL>
-          <SearchBox 
-          onChange={this.onInputChange.bind(this)} 
-          onKeyUp={this.onKeyUp.bind(this)}
-          value={this.state.searchValue} placeholder="search term"/>
+          <Header_Box_div>
+            <DropDownL id="DropDownSort" onChange = {this.onSortListChang.bind(this)}>
+              <option value=''>default</option>
+              <option value='title'>article title</option>
+              <option value='publishedAt' >article date</option>
+              <option value='Vote_value'>number of votes</option>
+            </DropDownL>
+            <DropDownL id="DropDownLimit" onChange = {this.onLimitListChang.bind(this)}>
+              <option value="5">5 article</option>
+              <option value="10">10 article</option>
+              <option value="15">15 article</option>
+            </DropDownL>
+            <SearchBox 
+            onChange={this.onInputChange.bind(this)} 
+            onKeyUp={this.onKeyUp.bind(this)}
+            value={this.state.searchValue} placeholder="search term"/>
+            <EmailBox id='EmailBox' placeholder="enter your email"/>
+            <Subscribtion type="button" onClick={this.onSubscribtionClick.bind(this)}>Subscribtion</Subscribtion>
+          </Header_Box_div>
         </Navigation>
         <NewsContainer>
           {
