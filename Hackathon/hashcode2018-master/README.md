@@ -1,7 +1,5 @@
-# hashcode2018
+# fikra hackathon 2019
 
-Our submission for the Hashcode 2018.
+husam imad abdulrazzaq 
 
-We scored a total of 35 850 929 points, ranked 1570/4856 globally, 208/628 in France.
-
-Was a real good time.
+score 30,416,359 on Self-driving rides problem using the dataset of fikraspace 
